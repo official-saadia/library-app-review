@@ -1,0 +1,20 @@
+name: Test
+on:
+  push:
+    branches: [master]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - run: mvn package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: library-app-jar
+          path: target/*.jar
